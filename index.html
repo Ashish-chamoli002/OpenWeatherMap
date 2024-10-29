@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data</title>
+</head>
+<body>
+    <h1>Weather Information</h1>
+    <div id="weather-info">
+        <!-- Weather data will be inserted here -->
+    </div>
+
+    <script>
+        // Function to fetch and display weather data
+        async function displayWeather() {
+            try {
+                // Fetch data from the server
+                const response = await fetch('/weather');
+                const weatherData = await response.json();
+                
+                // Check fetched data in console
+                console.log("Weather data:", weatherData);
+
+                // Insert data into HTML
+                document.getElementById('weather-info').innerHTML = `
+                    <p><strong>City:</strong> ${weatherData.city}</p>
+                    <p><strong>Temperature:</strong> ${weatherData.temperature}°C</p>
+                    <p><strong>Weather:</strong> ${weatherData.weather}</p>
+                    <p><strong>Humidity:</strong> ${weatherData.humidity}%</p>
+                    <p><strong>Wind Speed:</strong> ${weatherData.windSpeed} m/s</p>
+                `;
+            } catch (error) {
+                console.error("Error displaying weather data:", error);
+                document.getElementById('weather-info').innerText = "Error fetching weather data";
+            }
+        }
+
+        // Call the function to display weather data
+        displayWeather();
+    </script>
+</body>
+</html>
